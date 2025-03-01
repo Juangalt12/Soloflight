@@ -13,28 +13,18 @@ canvas {
     display: block;
     margin: 0 auto;
 }
-#rocketPreview {
-    margin: 20px auto;
-}
-.component-section {
-    margin: 15px 0;
-}
 button {
-    padding: 10px 15px;
+    padding: 10px;
     margin: 5px;
-    background-color: #2a2a5a;
+    background-color: #444;
     color: #fff;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
 }
 button:hover {
-    background-color: #3a3a8a;
+    background-color: #666;
 }
 button:disabled {
     background-color: #222;
     cursor: not-allowed;
-}
-h3 {
-    color: #aaaaff;
 }
