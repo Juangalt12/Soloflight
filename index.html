@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>StarForge: Solo Flight</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="phase1" class="phase">
+        <h1>Phase 1: Build Your Rocket</h1>
+        <p>Budget: <span id="budget">100</span> Credits</p>
+        <div>
+            <h3>Engines</h3>
+            <button onclick="selectComponent('engine', 'Basic Thruster', 30, { thrust: 50, weight: 20 })">Basic Thruster (30)</button>
+            <button onclick="selectComponent('engine', 'Pulse Drive', 50, { thrust: 80, weight: 30 })">Pulse Drive (50)</button>
+            <button onclick="selectComponent('engine', 'Nova Booster', 70, { thrust: 120, weight: 40 })">Nova Booster (70)</button>
+        </div>
+        <div>
+            <h3>Fuel Tanks</h3>
+            <button onclick="selectComponent('fuel', 'Small Tank', 20, { fuel: 100, weight: 10 })">Small Tank (20)</button>
+            <button onclick="selectComponent('fuel', 'Medium Tank', 40, { fuel: 200, weight: 20 })">Medium Tank (40)</button>
+            <button onclick="selectComponent('fuel', 'Large Tank', 60, { fuel: 350, weight: 30 })">Large Tank (60)</button>
+        </div>
+        <div>
+            <h3>Hulls</h3>
+            <button onclick="selectComponent('hull', 'Light Frame', 20, { weight: 10 })">Light Frame (20)</button>
+            <button onclick="selectComponent('hull', 'Reinforced Shell', 40, { weight: 25 })">Reinforced Shell (40)</button>
+            <button onclick="selectComponent('hull', 'Heavy Armor', 60, { weight: 40 })">Heavy Armor (60)</button>
+        </div>
+        <p>Selected: <span id="selection">None</span></p>
+        <button id="launchBtn" onclick="startPhase2()" disabled>Launch Rocket</button>
+    </div>
+    <div id="phase2" class="phase" style="display: none;">
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <p id="result"></p>
+        <button onclick="resetGame()">Build Another Rocket</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
