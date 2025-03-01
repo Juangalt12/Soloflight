@@ -4,12 +4,14 @@ let rocketCanvas = document.getElementById('rocketCanvas');
 let rCtx = rocketCanvas.getContext('2d');
 let gameCanvas = document.getElementById('gameCanvas');
 let ctx = gameCanvas.getContext('2d');
-let rocketX = 100;
+let rocketX = 400;  // Center of canvas horizontally
+let rocketY = 500;  // Starting position above Earth
 let velocity = 0;
-let distance = 0;
 let fuelRemaining = 0;
 let thrust = 0;
 let totalWeight = 0;
+let backgroundImg = new Image();
+backgroundImg.src = 'solar_system.png';  // Your AI-generated solar system image
 
 function selectComponent(type, name, cost, stats) {
     if (rocket[type] || budget < cost) return;
@@ -58,44 +60,54 @@ function startPhase2() {
     totalWeight = rocket.engine.weight + rocket.fuel.weight + rocket.hull.weight;
     thrust = rocket.engine.thrust;
     fuelRemaining = rocket.fuel.capacity;
-    rocketX = 100;
+    rocketX = 400;  // Center horizontally
+    rocketY = 500;  // Start just above Earth (550 - rocket height)
     velocity = 0;
-    distance = 0;
-    gameLoop();
+    backgroundImg.onload = function() {
+        gameLoop();
+    };
+    if (backgroundImg.complete) {
+        gameLoop();  // If image is already loaded
+    }
 }
 
 function gameLoop() {
-    let distanceFromSun = rocketX - 50;
-    if (distanceFromSun < 1) distanceFromSun = 1;
-    let gravity = 10 / (distanceFromSun * distanceFromSun);  // Reduced gravity
-
-    if (fuelRemaining > 0) {
-        let acceleration = (thrust / totalWeight) - gravity;
-        velocity += acceleration;
-        fuelRemaining -= 0.1;  // Slower fuel burn
-    } else {
-        velocity -= gravity;
-    }
-
-    if (velocity > 0) {
-        rocketX += velocity;
-        distance += velocity;
-    }
-
+    // Clear canvas
     ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-    ctx.fillStyle = 'yellow';
-    ctx.beginPath();
-    ctx.arc(50, 200, 20, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = '#666';
-    ctx.fillRect(rocketX, 180, 40, 40);
 
-    if (rocketX >= 800) {
-        document.getElementById('result').textContent = `Success! Distance: ${Math.round(distance)} units`;
+    // Draw solar system background
+    ctx.drawImage(backgroundImg, 0, 0, gameCanvas.width, gameCanvas.height);
+
+    // Draw Earth (blue circle at bottom center)
+    ctx.fillStyle = 'blue';
+    ctx.beginPath();
+    ctx.arc(400, 550, 50, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Update rocket position (vertical movement)
+    if (fuelRemaining > 0) {
+        let acceleration = (thrust / totalWeight) - 0.1;  // Constant gravity
+        velocity += acceleration;
+        fuelRemaining -= 0.1;
+    } else {
+        velocity -= 0.1;  // Gravity pulls down when fuel runs out
+    }
+
+    rocketY -= velocity;  // Decrease y to move up (canvas y increases downward)
+
+    // Draw rocket (simple vertical rectangle)
+    ctx.fillStyle = '#666';
+    ctx.fillRect(rocketX - 20, rocketY - 40, 40, 80);
+
+    // Win condition: reaches top of screen
+    if (rocketY <= 0) {
+        document.getElementById('result').textContent = 'Success! You escaped the solar system!';
         return;
     }
-    if (fuelRemaining <= 0 && velocity <= 0) {
-        document.getElementById('result').textContent = `Failed! Distance: ${Math.round(distance)} units`;
+
+    // Lose condition: falls back to Earth
+    if (rocketY >= 500 && velocity <= 0) {
+        document.getElementById('result').textContent = 'Failed! The rocket crashed back to Earth.';
         return;
     }
 
