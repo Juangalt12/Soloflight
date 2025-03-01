@@ -13,6 +13,7 @@ let totalWeight = 0;
 let backgroundImg = new Image();
 backgroundImg.src = 'solar_system.png';  // Your AI-generated solar system image
 
+// Function to select components and update budget
 function selectComponent(type, name, cost, stats) {
     if (rocket[type] || budget < cost) return;
     budget -= cost;
@@ -25,6 +26,7 @@ function selectComponent(type, name, cost, stats) {
     }
 }
 
+// Update the display of selected parts
 function updateSelectionDisplay() {
     const parts = [
         rocket.engine ? rocket.engine.name : 'No Engine',
@@ -34,6 +36,7 @@ function updateSelectionDisplay() {
     document.getElementById('selection').textContent = parts.join(' | ');
 }
 
+// Draw the rocket on the preview canvas
 function drawRocket() {
     rCtx.clearRect(0, 0, rocketCanvas.width, rocketCanvas.height);
     if (rocket.hull) {
@@ -54,6 +57,7 @@ function drawRocket() {
     }
 }
 
+// Start the launch phase
 function startPhase2() {
     document.getElementById('phase1').style.display = 'none';
     document.getElementById('phase2').style.display = 'block';
@@ -61,8 +65,9 @@ function startPhase2() {
     thrust = rocket.engine.thrust;
     fuelRemaining = rocket.fuel.capacity;
     rocketX = 400;  // Center horizontally
-    rocketY = 500;  // Start just above Earth (550 - rocket height)
+    rocketY = 500;  // Start just above Earth
     velocity = 0;
+    // Wait for background image to load before starting the loop
     backgroundImg.onload = function() {
         gameLoop();
     };
@@ -71,11 +76,12 @@ function startPhase2() {
     }
 }
 
+// Game loop for the launch phase
 function gameLoop() {
-    // Clear canvas
+    // Clear the canvas
     ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 
-    // Draw solar system background
+    // Draw the solar system background
     ctx.drawImage(backgroundImg, 0, 0, gameCanvas.width, gameCanvas.height);
 
     // Draw Earth (blue circle at bottom center)
@@ -86,7 +92,7 @@ function gameLoop() {
 
     // Update rocket position (vertical movement)
     if (fuelRemaining > 0) {
-        let acceleration = (thrust / totalWeight) - 0.1;  // Constant gravity
+        let acceleration = (thrust / totalWeight) - 0.1;  // Gravity effect
         velocity += acceleration;
         fuelRemaining -= 0.1;
     } else {
@@ -95,7 +101,7 @@ function gameLoop() {
 
     rocketY -= velocity;  // Decrease y to move up (canvas y increases downward)
 
-    // Draw rocket (simple vertical rectangle)
+    // Draw the rocket (simple vertical rectangle)
     ctx.fillStyle = '#666';
     ctx.fillRect(rocketX - 20, rocketY - 40, 40, 80);
 
@@ -114,6 +120,7 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
+// Reset the game to start over
 function resetGame() {
     budget = 150;
     rocket = { engine: null, fuel: null, hull: null };
