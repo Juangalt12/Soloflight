@@ -7,33 +7,42 @@
 </head>
 <body>
     <div id="phase1" class="phase">
-        <h1>Phase 1: Build Your Rocket</h1>
-        <p>Budget: <span id="budget">100</span> Credits</p>
-        <div>
-            <h3>Engines</h3>
-            <button onclick="selectComponent('engine', 'Basic Thruster', 30, { thrust: 50, weight: 20 })">Basic Thruster (30)</button>
-            <button onclick="selectComponent('engine', 'Pulse Drive', 50, { thrust: 80, weight: 30 })">Pulse Drive (50)</button>
-            <button onclick="selectComponent('engine', 'Nova Booster', 70, { thrust: 120, weight: 40 })">Nova Booster (70)</button>
+        <h1>Phase 1: Craft Your Celestial Voyager</h1>
+        <p>Cosmic Credits: <span id="budget">150</span></p>
+        <div id="rocketPreview">
+            <canvas id="rocketCanvas" width="200" height="300"></canvas>
+            <p>Current Design: <span id="selection">None</span></p>
         </div>
-        <div>
-            <h3>Fuel Tanks</h3>
-            <button onclick="selectComponent('fuel', 'Small Tank', 20, { fuel: 100, weight: 10 })">Small Tank (20)</button>
-            <button onclick="selectComponent('fuel', 'Medium Tank', 40, { fuel: 200, weight: 20 })">Medium Tank (40)</button>
-            <button onclick="selectComponent('fuel', 'Large Tank', 60, { fuel: 350, weight: 30 })">Large Tank (60)</button>
+        <div class="component-section">
+            <h3>Engines - Ignite Your Journey</h3>
+            <button onclick="selectComponent('engine', 'Ember Spark', 30, { thrust: 50, weight: 20 })">Ember Spark (30)</button>
+            <button onclick="selectComponent('engine', 'Pulse Vortex', 50, { thrust: 80, weight: 30 })">Pulse Vortex (50)</button>
+            <button onclick="selectComponent('engine', 'Nova Flare', 70, { thrust: 120, weight: 40 })">Nova Flare (70)</button>
+            <button onclick="selectComponent('engine', 'Aether Pulse', 90, { thrust: 150, weight: 50 })">Aether Pulse (90)</button>
+            <button onclick="selectComponent('engine', 'Starforge Titan', 120, { thrust: 200, weight: 70 })">Starforge Titan (120)</button>
         </div>
-        <div>
-            <h3>Hulls</h3>
-            <button onclick="selectComponent('hull', 'Light Frame', 20, { weight: 10 })">Light Frame (20)</button>
-            <button onclick="selectComponent('hull', 'Reinforced Shell', 40, { weight: 25 })">Reinforced Shell (40)</button>
-            <button onclick="selectComponent('hull', 'Heavy Armor', 60, { weight: 40 })">Heavy Armor (60)</button>
+        <div class="component-section">
+            <h3>Fuel Tanks - Fuel the Cosmic Dream</h3>
+            <button onclick="selectComponent('fuel', 'Astral Canister', 20, { fuel: 100, weight: 10 })">Astral Canister (20)</button>
+            <button onclick="selectComponent('fuel', 'Nebula Cell', 40, { fuel: 200, weight: 20 })">Nebula Cell (40)</button>
+            <button onclick="selectComponent('fuel', 'Comet Vault', 60, { fuel: 350, weight: 30 })">Comet Vault (60)</button>
+            <button onclick="selectComponent('fuel', 'Stellar Reservoir', 80, { fuel: 500, weight: 40 })">Stellar Reservoir (80)</button>
+            <button onclick="selectComponent('fuel', 'Infinity Well', 100, { fuel: 700, weight: 50 })">Infinity Well (100)</button>
         </div>
-        <p>Selected: <span id="selection">None</span></p>
-        <button id="launchBtn" onclick="startPhase2()" disabled>Launch Rocket</button>
+        <div class="component-section">
+            <h3>Hulls - Shield Your Destiny</h3>
+            <button onclick="selectComponent('fuel', 'Void Skin', 20, { weight: 10 })">Void Skin (20)</button>
+            <button onclick="selectComponent('hull', 'Meteor Shell', 40, { weight: 25 })">Meteor Shell (40)</button>
+            <button onclick="selectComponent('hull', 'Eclipse Armor', 60, { weight: 40 })">Eclipse Armor (60)</button>
+            <button onclick="selectComponent('hull', 'Galactic Carapace', 80, { weight: 55 })">Galactic Carapace (80)</button>
+            <button onclick="selectComponent('hull', 'Celestine Bulwark', 100, { weight: 70 })">Celestine Bulwark (100)</button>
+        </div>
+        <button id="launchBtn" onclick="startPhase2()" disabled>Launch Into the Void</button>
     </div>
     <div id="phase2" class="phase" style="display: none;">
         <canvas id="gameCanvas" width="800" height="400"></canvas>
         <p id="result"></p>
-        <button onclick="resetGame()">Build Another Rocket</button>
+        <button onclick="resetGame()">Forge Anew</button>
     </div>
     <script src="script.js"></script>
 </body>
